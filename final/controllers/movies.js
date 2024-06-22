@@ -4,8 +4,8 @@ const { PaginationParameters } = require("mongoose-paginate-v2");
 async function getMoviesCustom(req, res) {
   let query = Movie.find();
 
-  const currentPage = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 10;
+  const currentPage = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
   const offset = (currentPage - 1) * limit;
 
   query = query.skip(offset).limit(limit);
@@ -21,8 +21,8 @@ function getMoviesLibrary(req, res) {
   const { page, limit } = req.query;
 
   const options = {
-    page: Number(page),
-    limit: Number(limit),
+    page: parseInt(page, 10), 
+    limit: parseInt(limit, 10),
   };
 
   const movies = Movie.paginate({}, options).then((result) => {
